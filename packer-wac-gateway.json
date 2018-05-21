@@ -1,0 +1,51 @@
+{
+    "variables": {
+      "subscription_id":  "",
+      "client_id": "",
+      "client_secret": "",
+      "object_id": "",
+      "location": "westeurope"
+    },
+    "builders": [
+      {
+        "type": "azure-arm",
+        "subscription_id": "{{user `subscription_id`}}",
+        "client_id": "{{user `client_id`}}",
+        "client_secret": "{{user `client_secret`}}",
+        "object_id": "{{user `object_id`}}",
+        "location": "{{user `location`}}",
+        "image_publisher": "MicrosoftWindowsServer",
+        "image_offer": "WindowsServerSemiAnnual",
+        "image_sku": "Datacenter-Core-1709-smalldisk",
+        "managed_image_name": "ws1709test-{{isotime \"2006-01-02-150405\"}}",
+        "managed_image_resource_group_name": "RG-PackerTest",
+        "managed_image_storage_account_type": "Premium_LRS",
+        "private_virtual_network_with_public_ip": true,
+        "virtual_network_name": "vNet-Langskip-WE",
+        "virtual_network_resource_group_name": "LangskipNetwork",
+        "virtual_network_subnet_name": "Servers-Dynamic",
+        "vm_size": "Standard_DS2_v2",
+        "os_type": "Windows",
+        "communicator": "winrm",
+        "winrm_username": "localadmin",
+        "winrm_use_ssl": true,
+        "winrm_insecure": true
+      }
+    ],
+    "provisioners": [
+      {
+        "type": "powershell",
+        "inline": [
+            "msiexec /i <WindowsAdminCenterInstallerName>.msi /qn /L*v log.txt SME_PORT=<port> SME_THUMBPRINT=<thumbprint> SSL_CERTIFICATE_OPTION=installed"
+        ]
+      }, 
+      {
+        "type": "powershell",
+        "inline": [
+          "if( Test-Path $Env:SystemRoot\\windows\\system32\\Sysprep\\unattend.xml ){ rm $Env:SystemRoot\\windows\\system32\\Sysprep\\unattend.xml -Force}",
+          "& $Env:SystemRoot\\System32\\Sysprep\\Sysprep.exe /oobe /generalize /shutdown /quiet",
+          "while($true) { $imageState = Get-ItemProperty HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Setup\\State | Select ImageState; if($imageState.ImageState -ne 'IMAGE_STATE_GENERALIZE_RESEAL_TO_OOBE') { Write-Output $imageState.ImageState; Start-Sleep -s 10  } else { break } }"
+        ]
+      }
+    ]
+  }

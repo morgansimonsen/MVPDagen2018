@@ -34,13 +34,17 @@
         "communicator": "winrm",
         "winrm_username": "{{user `admin_username`}}",
         "winrm_use_ssl": true,
-        "winrm_insecure": true
+        "winrm_insecure": true,
+        "azure_tags": {
+          "event": "MVPDagen2018",
+          "task": "image deployment"
+        }
       }
     ],
     "provisioners": [
       {
         "type": "powershell",
-        "inline": ["get-ps-drive"]
+        "inline": ["get-psdrive"]
       },
       {
         "type": "powershell",

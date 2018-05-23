@@ -40,7 +40,7 @@
     "provisioners": [
       {
         "type": "powershell",
-        "inline": []
+        "inline": ["get-ps-drive"]
       },
       {
         "type": "powershell",

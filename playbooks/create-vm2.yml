@@ -1,0 +1,60 @@
+- name: Create VM with defaults
+  azure_rm_virtualmachine:
+    resource_group: Testing
+    name: testvm10
+    admin_username: chouseknecht
+    admin_password: <your password here>
+    image:
+      offer: CentOS
+      publisher: OpenLogic
+      sku: '7.1'
+      version: latest
+
+- name: Create a VM with exiting storage account and NIC
+  azure_rm_virtualmachine:
+    resource_group: Testing
+    name: testvm002
+    vm_size: Standard_D4
+    storage_account: testaccount001
+    admin_username: adminUser
+    ssh_public_keys:
+      - path: /home/adminUser/.ssh/authorized_keys
+        key_data: < insert yor ssh public key here... >
+    network_interfaces: testvm001
+    image:
+      offer: CentOS
+      publisher: OpenLogic
+      sku: '7.1'
+      version: latest
+
+- name: Power Off
+  azure_rm_virtualmachine:
+    resource_group: Testing
+    name: testvm002
+    started: no
+
+- name: Deallocate
+  azure_rm_virtualmachine:
+    resource_group: Testing
+    name: testvm002
+    allocated: no
+
+- name: Power On
+  azure_rm_virtualmachine:
+    resource_group:
+    name: testvm002
+
+- name: Restart
+  azure_rm_virtualmachine:
+    resource_group:
+    name: testvm002
+    restarted: yes
+
+- name: remove vm and all resources except public ips
+  azure_rm_virtualmachine:
+    resource_group: Testing
+    name: testvm002
+    state: absent
+    remove_on_absent:
+        - network_interfaces
+        - virtual_storage

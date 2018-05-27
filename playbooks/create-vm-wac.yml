@@ -11,6 +11,7 @@
       profile: default
       resource_group: "RG-WindowsAdminCenter"
       name: "ls-wac1"
+      vm_size: "Standard_D2s_v3"
       admin_username: "localadmin"
       admin_password: "VeryStrongP@ssw0rd!"
       managed_disk_type: "Premium_LRS"

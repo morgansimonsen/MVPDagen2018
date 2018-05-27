@@ -4,6 +4,9 @@
   connection: local
 
   tasks:
+  - name: Get facts for all resource groups
+    azure_rm_resourcegroup_facts:
+
   - name: Windows Admin Center
     azure_rm_resourcegroup:
       name: rg-windowsadmincenter

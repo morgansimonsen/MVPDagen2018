@@ -1,11 +1,15 @@
 
 - name: Create Azure RGs
   hosts: localhost
+  gather_facts: no
   connection: local
 
   tasks:
   - name: Get facts for all resource groups
     azure_rm_resourcegroup_facts:
+    register: rgtest
+
+  - debug: var=rgtest
 
   - name: Windows Admin Center
     azure_rm_resourcegroup:

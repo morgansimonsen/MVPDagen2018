@@ -5,21 +5,11 @@
   connection: local
 
   tasks:
-  - name: Get facts for all resource groups
-    azure_rm_resourcegroup_facts:
-    register: rgtest
-
-  - debug: var=rgtest
-
   - name: Windows Admin Center
     azure_rm_resourcegroup:
-      name: rg-windowsadmincenter
+      profile: default
+      name: RG-WindowsAdminCenter
       location: westeurope
+      state: present
       tags:
           event: MVPDagen2018
-
-  - name: Create storage account
-    azure_rm_storageaccount:
-      resource_group: RG-Test2
-      name: testaccountfff
-      account_type: Standard_LRS

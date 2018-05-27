@@ -1,0 +1,6 @@
+- name: Create Azure RG for WAC
+  azure_rm_resourcegroup:
+    name: RG-WindowsAdminCenter
+    location: westeurope
+    tags:
+        event: MVPDagen2018

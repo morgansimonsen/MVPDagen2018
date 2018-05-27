@@ -1,0 +1,26 @@
+- name: Create virtual machine for Windows Admin Center
+  azure_rm_virtualmachine:
+    resource_group: "{{ az_resources }}"
+    name: "{{ item.name }}"
+    managed_disk_type: "Standard_LRS"
+    admin_username: "{{ az_username }}"
+    admin_password: "{{ az_password }}"
+    managed_disk_type: "Standard_LRS"
+    image:
+      offer: RHEL
+      publisher: RedHat
+      sku: '7.3'
+      urn: 'RedHat:RHEL:7.3:latest'
+      version: '7.3.2017090723'
+  with_items: "{{ cluster_hosts }}"
+  register: az_servers
+
+- name: create additional volumes
+  azure_rm_managed_disk:    
+    name: "{{ item.volume_name }}"
+    location: eastus
+    resource_group: "{{ az_resources }}"
+    disk_size_gb: 40
+    managed_by: "{{ item.server_name }}"
+  register: az_cluster_volumes
+  with_items: "{{ cluster_volumes }}"

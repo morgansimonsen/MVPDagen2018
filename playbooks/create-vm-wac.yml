@@ -1,26 +1,42 @@
-- name: Create virtual machine for Windows Admin Center
-  azure_rm_virtualmachine:
-    resource_group: "{{ az_resources }}"
-    name: "{{ item.name }}"
-    managed_disk_type: "Standard_LRS"
-    admin_username: "{{ az_username }}"
-    admin_password: "{{ az_password }}"
-    managed_disk_type: "Standard_LRS"
-    image:
-      offer: RHEL
-      publisher: RedHat
-      sku: '7.3'
-      urn: 'RedHat:RHEL:7.3:latest'
-      version: '7.3.2017090723'
-  with_items: "{{ cluster_hosts }}"
-  register: az_servers
 
-- name: create additional volumes
-  azure_rm_managed_disk:    
-    name: "{{ item.volume_name }}"
-    location: eastus
-    resource_group: "{{ az_resources }}"
-    disk_size_gb: 40
-    managed_by: "{{ item.server_name }}"
-  register: az_cluster_volumes
-  with_items: "{{ cluster_volumes }}"
+- name: Deploy Windows Admin Center
+  hosts: localhost
+  gather_facts: no
+  connection: local
+
+  - name: Create virtual machine
+    azure_rm_virtualmachine:
+      auth_source: auto
+      profile: default
+      resource_group: "RG-WindowsAdminCenter"
+      name: "ls-wac1"
+      admin_username: "localadmin"
+      admin_password: "VeryStrongP@ssw0rd!"
+      managed_disk_type: "Premium_LRS"
+      os_type: Windows
+      image:
+        offer: WindowsServer
+        publisher: MicrosoftWindowsServer
+        sku: '2016-Datacenter'
+        version: 'latest'
+      open_ports:
+       - 3389
+       - 5986
+       - 6516
+      virtual_network_resource_group: "LangskipNetwork"
+      virtual_network_name: "vNet-Langskip-WE"
+      subnet: "Servers-Static"
+      public_ip_allocation_method: Dynamic
+      tags:
+        event: MVPDagen2018
+
+  - name: Create VM Extension
+    azure_rm_virtualmachine_extension:
+      name: WACCustomScript
+      resource_group: "RG-WindowsAdminCenter"
+      virtual_machine_name: "ls-wac1"
+      publisher: Microsoft.Azure.Extensions
+      virtual_machine_extension_type: CustomScript
+      type_handler_version: 2.0
+      settings: '{"commandToExecute": "hostname"}'
+      auto_upgrade_minor_version: true

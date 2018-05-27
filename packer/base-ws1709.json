@@ -9,7 +9,8 @@
       "vnet_rg": "LangskipNetwork",
       "vnet_name": "vNet-Langskip-WE",
       "subnet": "Servers-Dynamic",
-      "admin_username": "localadmin"
+      "admin_username": "localadmin",
+      "packer_dir": "./packer/"
     },
     "builders": [
       {
@@ -44,7 +45,20 @@
     "provisioners": [
       {
         "type": "powershell",
-        "inline": ["get-psdrive"]
+          "script": "{{ user `packer_dir` }}InstallOpenSSH-Win.ps1"
+      },
+      {
+        "type": "powershell",
+          "script": "{{ user `packer_dir` }}InstallDataDogAgent.ps1"
+      },
+      {
+        "type": "file",
+        "source": "{{ user `packer_dir` }}nxlog.conf.temp",
+        "destination": "C:\\windows\\temp\\nxlog.conf.temp"
+      },
+      {
+        "type": "powershell",
+          "script": "{{ user `packer_dir` }}InstallLogglyAgent.ps1"
       },
       {
         "type": "powershell",

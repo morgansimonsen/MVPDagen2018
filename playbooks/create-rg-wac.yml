@@ -7,7 +7,7 @@
   tasks:
   - name: Windows Admin Center
     azure_rm_resourcegroup:
-      auth_source": auto
+      auth_source: auto
       profile: default
       name: RG-WindowsAdminCenter
       location: westeurope

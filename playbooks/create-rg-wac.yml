@@ -5,6 +5,7 @@
   connection: local
 
   tasks:
+
   - name: Create Azure RG for WAC
     azure_rm_resourcegroup:
       name: RG-WindowsAdminCenter

@@ -1,14 +1,12 @@
 
 - name: Create Azure RGs
   hosts: localhost
-  gather_facts: no
   connection: local
 
   tasks:
-
-  - name: Create Azure RG for WAC
+  - name: Windows Admin Center
     azure_rm_resourcegroup:
-      name: RG-WindowsAdminCenter
+      name: rg-windowsadmincenter
       location: westeurope
       tags:
           event: MVPDagen2018

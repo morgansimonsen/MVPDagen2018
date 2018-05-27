@@ -32,6 +32,8 @@
 
   - name: Create VM Extension
     azure_rm_virtualmachine_extension:
+      auth_source: auto
+      profile: default
       name: WACCustomScript
       resource_group: "RG-WindowsAdminCenter"
       virtual_machine_name: "ls-wac1"

@@ -4,6 +4,7 @@
   gather_facts: no
   connection: local
 
+  tasks:
   - name: Create virtual machine
     azure_rm_virtualmachine:
       auth_source: auto

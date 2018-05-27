@@ -17,3 +17,9 @@
       location: westeurope
       tags:
           event: MVPDagen2018
+
+  - name: Create storage account
+    azure_rm_storageaccount:
+      resource_group: RG-Test2
+      name: testaccountfff
+      account_type: Standard_LRS

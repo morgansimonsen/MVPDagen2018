@@ -1,0 +1,16 @@
+
+- name: Create Azure RGs
+  hosts: localhost
+  gather_facts: no
+  connection: local
+
+  tasks:
+  - name: Windows Admin Center
+    azure_rm_resourcegroup:
+      auth_source: auto
+      profile: default
+      name: RG-WindowsAdminCenter
+      location: westeurope
+      state: present
+      tags:
+          event: MVPDagen2018

@@ -5,6 +5,37 @@
   connection: local
 
   tasks:
+  - name: Create PIP
+    azure_rm_publicipaddress:
+      auth_source: auto
+      profile: default
+      resource_group: "RG-WindowsAdminCenter"
+      name: "PIP-ls-wac1"
+      allocation_method: Static
+      domain_name: ls-wac1
+      tags:
+        event: MVPDagen2018
+
+  - name: Create NIC
+    azure_rm_networkinterface:
+      auth_source: auto
+      profile: default
+      resource_group: "RG-WindowsAdminCenter"
+      name: "NIC-ls-wac1"
+      virtual_network_name: "vNet-Langskip-WE"
+      subnet: "Servers-Static"
+      os_type: Windows
+      open_ports:
+       - 3389
+       - 5986
+       - 6516
+      ip_configurations:
+        - name: ipconfig1
+          public_ip_address_name: "PIP-ls-wac1"
+          primary: True
+      tags:
+        event: MVPDagen2018
+
   - name: Create virtual machine
     azure_rm_virtualmachine:
       auth_source: auto
@@ -14,6 +45,7 @@
       vm_size: "Standard_D2s_v3"
       admin_username: "localadmin"
       admin_password: "VeryStrongP@ssw0rd!"
+      network_interface_names: "NIC-ls-wac1"
       managed_disk_type: "Premium_LRS"
       os_type: Windows
       image:
@@ -21,14 +53,6 @@
         publisher: MicrosoftWindowsServer
         sku: '2016-Datacenter'
         version: 'latest'
-      open_ports:
-       - 3389
-       - 5986
-       - 6516
-      virtual_network_resource_group: "LangskipNetwork"
-      virtual_network_name: "vNet-Langskip-WE"
-      subnet: "Servers-Static"
-      public_ip_allocation_method: Dynamic
       tags:
         event: MVPDagen2018
 

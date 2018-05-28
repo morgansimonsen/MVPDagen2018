@@ -22,8 +22,8 @@
       profile: default
       resource_group: "RG-WindowsAdminCenter"
       name: "NIC-ls-wac1"
-      virtual_network_name: "vNet-Langskip-WE"
-      subnet: "Servers-Static"
+      virtual_network_name: "/subscriptions/3cf46281-f639-44bc-a338-11697697bb2a/resourceGroups/LangskipNetwork/providers/Microsoft.Network/virtualNetworks/vNet-Langskip-WE"
+      subnet_name: "Servers-Static"
       os_type: Windows
       open_ports:
        - 3389

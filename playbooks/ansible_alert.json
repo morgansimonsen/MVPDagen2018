@@ -1,0 +1,21 @@
+{
+    "title":  "New Deployment Notification",
+    "sections":  [
+                     {
+                         "activitySubtitle":  "MVP Dagen 2018",
+                         "activityImage":  "https://haaaad.gallerycdn.vsassets.io/extensions/haaaad/ansible/0.2.8/1523004165739/Microsoft.VisualStudio.Services.Icons.Default",
+                         "activityTitle":  "Ansible Deployment",
+                         "activityText":  "A change was evaluated and new results are available."
+                     },
+                     {
+                         "facts":  [
+                                       {
+                                           "value":  "{{ vmname }}",
+                                           "name":  "VM Name"
+                                       }
+                                   ],
+                         "title":  "Details"
+                     }
+                 ],
+    "text":  "An Ansible deployment was started..."
+}

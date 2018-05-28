@@ -5,14 +5,19 @@
   connection: local
 
   tasks:
+  - set_fact: vmname= "ls-wac1"
+
+  - name: Notify in Teams
+    command: curl -H 'Content-Type: application/json' -d '{\"text\": \"{% import 'ansible_alert.json' as jsonblob with context %}\"}' https://outlook.office.com/webhook/aece0949-c7b2-48a5-9dc2-f4351e5dc925@8fec7cb8-30e7-4d8a-98ae-6e64853af4a3/IncomingWebhook/59a5ebb5dd7f4741bd0e9f515169f776/e64f54d5-1068-453c-9772-b1d403cce6fb
+
   - name: Create PIP
     azure_rm_publicipaddress:
       auth_source: auto
       profile: default
       resource_group: "RG-WindowsAdminCenter"
-      name: "PIP-ls-wac1"
+      name: "{{ 'PIP-' + vmname }}"
       allocation_method: Static
-      domain_name: ls-wac1
+      domain_name: "{{ vmname }}"
       tags:
         event: MVPDagen2018
 
@@ -21,7 +26,7 @@
       auth_source: auto
       profile: default
       resource_group: "RG-WindowsAdminCenter"
-      name: "NIC-ls-wac1"
+      name: "{{ 'NIC-' + vmname }}"
       virtual_network_name: "/subscriptions/3cf46281-f639-44bc-a338-11697697bb2a/resourceGroups/LangskipNetwork/providers/Microsoft.Network/virtualNetworks/vNet-Langskip-WE"
       subnet_name: "Servers-Static"
       os_type: Windows
@@ -31,7 +36,7 @@
        - 6516
       ip_configurations:
         - name: ipconfig1
-          public_ip_address_name: "PIP-ls-wac1"
+          public_ip_address_name: "{{ 'PIP-' + vmname }}"
           primary: True
       tags:
         event: MVPDagen2018
@@ -41,11 +46,11 @@
       auth_source: auto
       profile: default
       resource_group: "RG-WindowsAdminCenter"
-      name: "ls-wac1"
+      name: "{{ vmname }}"
       vm_size: "Standard_D2s_v3"
       admin_username: "localadmin"
       admin_password: "VeryStrongP@ssw0rd!"
-      network_interface_names: "NIC-ls-wac1"
+      network_interface_names: "{{ 'NIC-' + vmname }}"
       managed_disk_type: "Premium_LRS"
       os_type: Windows
       image:
@@ -62,7 +67,7 @@
       profile: default
       name: WACCustomScript
       resource_group: "RG-WindowsAdminCenter"
-      virtual_machine_name: "ls-wac1"
+      virtual_machine_name: "{{ vmname }}"
       publisher: Microsoft.Compute
       virtual_machine_extension_type: CustomScriptExtension
       type_handler_version: 1.9

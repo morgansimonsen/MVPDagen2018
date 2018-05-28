@@ -66,5 +66,5 @@
       publisher: Microsoft.Azure.Extensions
       virtual_machine_extension_type: CustomScript
       type_handler_version: 2.0
-      settings: '{"commandToExecute": "hostname"}'
+      settings: '{"fileUris": ["https://raw.githubusercontent.com/morgansimonsen/MVPDagen2018/master/wac/Install-WAC.ps1"],"commandToExecute": "Install-WAC.ps1"}'
       auto_upgrade_minor_version: true

@@ -81,3 +81,11 @@ Add-AzureRmVMNetworkInterface -Id $nic.Id
 
 # Create a virtual machine
 New-AzureRmVM -ResourceGroupName $resourceGroup -Location $location -VM $vmConfig
+
+# Configure WinRM Trusted hosts
+Set-AzureRmVMCustomScriptExtension -ResourceGroupName $resourceGroup `
+    -VMName $vmName `
+    -Location $location `
+    -FileUri "https://raw.githubusercontent.com/morgansimonsen/MVPDagen2018/master/wac/Enable-WACRemoteManagementAzureVM.ps1" `
+    -Run "powershell.exe -ExecutionPolicy Unrestricted -file Enable-WACRemoteManagementAzureVM.ps1" `
+    -Name "WinRMScriptExtension"

@@ -6,3 +6,7 @@ Import-PfxCertificate -FilePath C:\Users\Administrator.HOME-HYPERV1\Downloads\ho
                         -CertStoreLocation Cert:\LocalMachine\My
 # Install WAC
 msiexec /i WindowsAdminCenter1804.25.msi /qn /L*v log.txt SME_PORT=6516 SME_THUMBPRINT=72245DF7DE63A2280856164BBDFE027E2EFBECD6 SSL_CERTIFICATE_OPTION=installed
+
+# debug
+# turn off firewall
+Set-NetFirewallProfile -Profile Domain,Public,Private -Enabled False

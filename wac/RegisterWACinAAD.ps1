@@ -1,0 +1,1 @@
+.\New-AadApp.ps1 -GatewayEndpoint "https://wac.langskip.no" -Credential (Get-Credential)

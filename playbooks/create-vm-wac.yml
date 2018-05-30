@@ -8,6 +8,7 @@
   - set_fact:
       resourcegroup: "RG-WindowsAdminCenter2"
       vmname: "ls-wac2"
+      tag_event: "MVPDagen2018"
 
   - name: Notify in Teams
     uri:
@@ -27,7 +28,7 @@
       allocation_method: Static
       domain_name: "{{ vmname }}"
       tags:
-        event: MVPDagen2018
+        event: "{{ tag_event }}"
 
   - name: Create NIC
     azure_rm_networkinterface:
@@ -48,7 +49,7 @@
           public_ip_address_name: "{{ 'PIP-' + vmname }}"
           primary: True
       tags:
-        event: MVPDagen2018
+        event: "{{ tag_event }}"
 
   - name: Create virtual machine
     azure_rm_virtualmachine:
@@ -68,7 +69,7 @@
         sku: '2016-Datacenter'
         version: 'latest'
       tags:
-        event: MVPDagen2018
+        event: "{{ tag_event }}"
 
   - name: VM user assigned identity
     command: az vm identity assign -g "{{ resourcegroup }}" -n "{{ vmname }}" --identities "/subscriptions/3cf46281-f639-44bc-a338-11697697bb2a/resourcegroups/RG-WindowsAdminCenter2/providers/Microsoft.ManagedIdentity/userAssignedIdentities/kvreader"

@@ -2,7 +2,18 @@
 Install-WAC.ps1
 Morgan Simonsen
 #>
-$WACInstallerDestinationFolder = "c:\windows\temp"
+
+# start transcript
+$WindowsTempFolder = Join-Path -Path $env:SystemRoot -ChildPath "temp"
+Start-Transcript -Path (Join-Path -Path $env:SystemRoot -ChildPath "\temp\wacinstall.log" )
+
+# temp folder
+$WACInstallerDestinationFolder = $WindowsTempFolder
+
+# install azure modules
+Get-PackageProvider -Name NuGet -ForceBootstrap #Bootstrap NuGet
+Set-PSRepository -Name PSGallery -InstallationPolicy Trusted #Set PSGallery as trusted repo
+Install-Module -Name AzureRM
 
 # import certificate
 $pfxpassword = Get-AzureKeyVaultSecret -VaultName "wac-kv" -Name "pfxpassword"
@@ -40,3 +51,5 @@ $MSIArguments = @(
 Start-Process "msiexec.exe" -ArgumentList $MSIArguments -Wait -NoNewWindow 
 
 Add-WindowsFeature -Name RSAT-Storage-Replica
+
+Stop-Transcript

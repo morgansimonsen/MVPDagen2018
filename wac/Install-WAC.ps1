@@ -4,7 +4,11 @@ Morgan Simonsen
 #>
 
 # import certificate
-Import-PfxCertificate -Exportable:$true -FilePath c:\windows\temp\ls-wac1.pfx -CertStoreLocation Cert:\LocalMachine\My -Password (Get-Credential).password
+$pfxpassword = Get-AzureKeyVaultSecret -VaultName "wac-kv" -Name "pfxpassword"
+$secpasswd = ConvertTo-SecureString $pfxpassword -AsPlainText -Force
+$pfxcreds = New-Object System.Management.Automation.PSCredential ("foo", $secpasswd)
+Start-BitsTransfer -Source "https://github.com/morgansimonsen/MVPDagen2018/blob/master/wac/ls-wac1.pfx" -Destination $WACInstallerDestinationFolder
+Import-PfxCertificate -Exportable:$true -FilePath c:\windows\temp\ls-wac1.pfx -CertStoreLocation Cert:\LocalMachine\My -Password $pfxcreds.password
 
 # install net fw
 $netfwdownloadurl = "https://download.microsoft.com/download/3/3/2/332D9665-37D5-467A-84E1-D07101375B8C/NDP472-KB4054531-Web.exe"

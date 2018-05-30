@@ -63,7 +63,6 @@ $resourceGroup = "RG-PackerTest"
 $location = "westeurope"
 $PackerImageId = "/subscriptions/3cf46281-f639-44bc-a338-11697697bb2a/resourceGroups/RG-PackerTest/providers/Microsoft.Compute/images/ws1709-2018-05-23-233900"
 $image = Get-AzureRmImage -ResourceGroupName $resourceGroup -ImageName $PackerImageName
-$vmName = "ls-srv-"+ -join ((48..57) + (97..122) | Get-Random -Count 8 | % {[char]$_})
 $vmSize = "Standard_D2s_v3"
 $subnetId = "/subscriptions/3cf46281-f639-44bc-a338-11697697bb2a/resourceGroups/LangskipNetwork/providers/Microsoft.Network/virtualNetworks/vNet-Langskip-WE/subnets/Servers-Static"
 

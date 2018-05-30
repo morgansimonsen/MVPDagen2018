@@ -9,7 +9,7 @@
     azure_rm_resourcegroup:
       auth_source: auto
       profile: default
-      name: RG-WindowsAdminCenter
+      name: RG-WindowsAdminCenter2
       location: westeurope
       state: present
       tags:

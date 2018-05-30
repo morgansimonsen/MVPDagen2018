@@ -14,7 +14,7 @@
     azure_rm_publicipaddress:
       auth_source: auto
       profile: default
-      resource_group: "RG-WindowsAdminCenter"
+      resource_group: "RG-WindowsAdminCenter2"
       name: "{{ 'PIP-' + vmname }}"
       allocation_method: Static
       domain_name: "{{ vmname }}"
@@ -25,7 +25,7 @@
     azure_rm_networkinterface:
       auth_source: auto
       profile: default
-      resource_group: "RG-WindowsAdminCenter"
+      resource_group: "RG-WindowsAdminCenter2"
       name: "{{ 'NIC-' + vmname }}"
       virtual_network_name: "/subscriptions/3cf46281-f639-44bc-a338-11697697bb2a/resourceGroups/LangskipNetwork/providers/Microsoft.Network/virtualNetworks/vNet-Langskip-WE"
       subnet_name: "Servers-Static"
@@ -46,7 +46,7 @@
     azure_rm_virtualmachine:
       auth_source: auto
       profile: default
-      resource_group: "RG-WindowsAdminCenter"
+      resource_group: "RG-WindowsAdminCenter2"
       name: "{{ vmname }}"
       vm_size: "Standard_D2s_v3"
       admin_username: "localadmin"
@@ -67,7 +67,7 @@
       auth_source: auto
       profile: default
       name: WACCustomScript
-      resource_group: "RG-WindowsAdminCenter"
+      resource_group: "RG-WindowsAdminCenter2"
       virtual_machine_name: "{{ vmname }}"
       publisher: Microsoft.Compute
       virtual_machine_extension_type: CustomScriptExtension

@@ -72,10 +72,7 @@
         event: "{{ tag_event }}"
 
   - name: VM user assigned identity
-    command: az vm identity assign -g "{{ resourcegroup }}" -n "{{ vmname }}" --identities "/subscriptions/3cf46281-f639-44bc-a338-11697697bb2a/resourcegroups/RG-WindowsAdminCenter2/providers/Microsoft.ManagedIdentity/userAssignedIdentities/kvreader"
-
-  - name: VM system assigned identity
-    command: az vm identity assign -g "{{ resourcegroup }}" -n "{{ vmname }}"
+    command: az vm identity assign -g "{{ resourcegroup }}" -n "{{ vmname }}" --identities "/subscriptions/3cf46281-f639-44bc-a338-11697697bb2a/resourcegroups/RG-WindowsAdminCenter/providers/Microsoft.ManagedIdentity/userAssignedIdentities/kvreader"
 
   - name: Create VM Extension
     azure_rm_virtualmachine_extension:

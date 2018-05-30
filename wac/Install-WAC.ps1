@@ -2,6 +2,7 @@
 Install-WAC.ps1
 Morgan Simonsen
 #>
+$WACInstallerDestinationFolder = "c:\windows\temp"
 
 # import certificate
 $pfxpassword = Get-AzureKeyVaultSecret -VaultName "wac-kv" -Name "pfxpassword"

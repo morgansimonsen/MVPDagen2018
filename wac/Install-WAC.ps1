@@ -26,7 +26,7 @@ $pfxpassword = ($kvsecret | ConvertFrom-Json).value
 # import certificate
 $secpasswd = ConvertTo-SecureString $pfxpassword -AsPlainText -Force
 $pfxcreds = New-Object System.Management.Automation.PSCredential ("foo", $secpasswd)
-Start-BitsTransfer -Source "https://github.com/morgansimonsen/MVPDagen2018/blob/master/wac/ls-wac1.pfx" -Destination $WACInstallerDestinationFolder
+Start-BitsTransfer -Source "https://github.com/morgansimonsen/MVPDagen2018/raw/master/wac/ls-wac1.pfx" -Destination $WACInstallerDestinationFolder
 Import-PfxCertificate -Exportable:$true -FilePath c:\windows\temp\ls-wac1.pfx -CertStoreLocation Cert:\LocalMachine\My -Password $pfxcreds.password
 
 # install net fw

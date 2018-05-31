@@ -20,7 +20,7 @@ $response = Invoke-WebRequest -Uri "http://169.254.169.254/metadata/identity/oau
                               -Headers @{Metadata="true"} -UseBasicParsing
 $content =$response.Content | ConvertFrom-Json
 $KeyVaultToken = $content.access_token
-$kvsecret = (Invoke-WebRequest -Uri "https://wac-kv.vault.azure.net/secrets/pfxpassword?api-version=2016-10-01" -Method GET -Headers @{Authorization="Bearer $KeyVaultToken"}).content
+$kvsecret = (Invoke-WebRequest -Uri "https://wac-kv.vault.azure.net/secrets/pfxpassword?api-version=2016-10-01" -Method GET -Headers @{Authorization="Bearer $KeyVaultToken"} -UseBasicParsing).content
 $pfxpassword = ($kvsecret | ConvertFrom-Json).value
 
 # import certificate

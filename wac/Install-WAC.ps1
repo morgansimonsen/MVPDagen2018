@@ -17,7 +17,7 @@ Install-Module -Name AzureRM
 
 # get password from KV
 $response = Invoke-WebRequest -Uri "http://169.254.169.254/metadata/identity/oauth2/token?api-version=2018-02-01&resource=https%3A%2F%2Fvault.azure.net&client_id=81af743d-f80b-4e47-931d-6ecb9187db85" `
-                              -Headers @{Metadata="true"}
+                              -Headers @{Metadata="true"} -UseBasicParsing
 $content =$response.Content | ConvertFrom-Json
 $KeyVaultToken = $content.access_token
 $kvsecret = (Invoke-WebRequest -Uri "https://wac-kv.vault.azure.net/secrets/pfxpassword?api-version=2016-10-01" -Method GET -Headers @{Authorization="Bearer $KeyVaultToken"}).content
